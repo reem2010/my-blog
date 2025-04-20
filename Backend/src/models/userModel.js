@@ -1,26 +1,28 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
-const postSchema = new Schema(
+const userSchema = new Schema(
   {
-    title: {
+    email: {
       type: String,
       required: true,
+      unique: true,
     },
     password: {
       type: String,
       required: true,
     },
-    image: {
+    username: {
       type: String,
-    },
-    author: {
-      type: mongoose.Types.ObjectId,
-      ref: "User",
       required: true,
     },
   },
   { timestamps: true }
 );
-const Post = mongoose.model("Post", postSchema);
-export default Post;
+
+userSchema.statics.findByEmail = function (email) {
+  return this.findOne({ email });
+};
+
+const User = mongoose.model("User", userSchema);
+export default User;
