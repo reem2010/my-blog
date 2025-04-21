@@ -8,7 +8,7 @@ export const loginController = async (req, res) => {
   try {
     const { password, email } = req.body;
     const userExist = await userModel.findByEmail(email);
-    if (!userExist || !(await compare(password, user.password))) {
+    if (!userExist || !(await compare(password, userExist.password))) {
       res.status(401).json({ error: "Authentication failed" });
     } else {
       const token = jwt.sign({ userId: userExist.id }, secretKey, {
@@ -20,7 +20,15 @@ export const loginController = async (req, res) => {
         sameSite: "none",
         partitioned: true,
       });
-      res.status(200).json({ message: "user logged in", userId: userExist.id });
+      res.status(200).json({
+        user: {
+          email: userExist.email,
+          username: userExist.username,
+          createdAt: userExist.createdAt,
+          updatedAt: userExist.updatedAt,
+        },
+        message: "user logged in",
+      });
     }
   } catch (error) {
     console.log(error.message);
@@ -50,7 +58,15 @@ export const registerController = async (req, res) => {
         sameSite: "none",
         partitioned: true,
       });
-      res.status(201).json({ message: "User registered successfully" });
+      res.status(201).json({
+        user: {
+          email: user.email,
+          username: user.username,
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt,
+        },
+        message: "User registered successfully",
+      });
     }
   } catch (error) {
     console.log(error.message);
@@ -65,8 +81,8 @@ export const logoutController = async (req, res) => {
 
 export const authController = async (req, res) => {
   try {
-    const user = userModel.userData(req.userId);
-    res.json({ user });
+    const user = await userModel.userData(req.userId);
+    res.json(user);
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ error: "Internal server error" });

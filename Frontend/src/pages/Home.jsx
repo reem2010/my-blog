@@ -40,7 +40,7 @@ export default function Home({ user }) {
   };
   return (
     <>
-      <div className="max-w-3xl m-auto w-full flex flex-col gap-8">
+      <div className="max-w-3xl m-auto w-full flex flex-col gap-8 mt-[50px]">
         {posts.map((post) => (
           <BlogCard post={post} key={post.id} />
         ))}
