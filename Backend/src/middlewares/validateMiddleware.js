@@ -5,10 +5,12 @@ export default function validate(schema) {
       if (!error) {
         next();
       } else {
-        return res.status(400).json({ error: error.details[0].message });
+        console.log(error.details);
+        return res.status(400).json({ error: "Invalide data" });
       }
     } catch (e) {
-      res.status(500).json({ error: e.message });
+      console.log(e.message);
+      res.status(500).json({ error: "Internal server error" });
     }
   };
 }

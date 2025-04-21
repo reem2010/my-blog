@@ -10,6 +10,7 @@ function verifyToken(req, res, next) {
     req.userId = decoded.userId;
     next();
   } catch (error) {
+    console.log(error.message);
     res.status(401).json({ error: "Access denied" });
   }
 }

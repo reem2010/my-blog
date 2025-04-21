@@ -7,7 +7,7 @@ const postSchema = new Schema(
       type: String,
       required: true,
     },
-    password: {
+    content: {
       type: String,
       required: true,
     },
@@ -22,5 +22,16 @@ const postSchema = new Schema(
   },
   { timestamps: true }
 );
+
+postSchema.statics.getPosts = function () {
+  return this.find({}, { __v: 0 })
+    .populate({
+      path: "author",
+      select: "username",
+    })
+    .sort({ createdAt: -1 })
+    .lean();
+};
+
 const Post = mongoose.model("Post", postSchema);
 export default Post;
