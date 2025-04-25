@@ -28,7 +28,7 @@ export default function Auth() {
             }
             to="/auth"
           >
-            Alreate have one!
+            Already have one!
           </NavLink>
         </div>
       </div>

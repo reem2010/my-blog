@@ -9,7 +9,7 @@ export const loginController = async (req, res) => {
     const { password, email } = req.body;
     const userExist = await userModel.findByEmail(email);
     if (!userExist || !(await compare(password, userExist.password))) {
-      res.status(401).json({ error: "Authentication failed" });
+      res.status(401).json({ error: "Incorrect email or password" });
     } else {
       const token = jwt.sign({ userId: userExist.id }, secretKey, {
         expiresIn: "1h",
@@ -22,6 +22,7 @@ export const loginController = async (req, res) => {
       });
       res.status(200).json({
         user: {
+          id: userExist._id,
           email: userExist.email,
           username: userExist.username,
           createdAt: userExist.createdAt,
@@ -41,7 +42,7 @@ export const registerController = async (req, res) => {
     const { username, email, password } = req.body;
     const user = await userModel.findByEmail(email);
     if (user) {
-      res.status(409).json({ error: "email is already exist" });
+      res.status(409).json({ error: "Email already exists" });
     } else {
       const hashed_pass = await hash(password, 10);
       const user = await userModel.create({
@@ -60,6 +61,7 @@ export const registerController = async (req, res) => {
       });
       res.status(201).json({
         user: {
+          id: user._id,
           email: user.email,
           username: user.username,
           createdAt: user.createdAt,
@@ -82,7 +84,8 @@ export const logoutController = async (req, res) => {
 export const authController = async (req, res) => {
   try {
     const user = await userModel.userData(req.userId);
-    res.json(user);
+    const { _id, ...rest } = user;
+    res.json({ user: { ...rest, id: _id } });
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ error: "Internal server error" });

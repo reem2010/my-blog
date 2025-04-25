@@ -5,7 +5,11 @@ export const getPosts = async (req, res) => {
     let posts = await postModel.getPosts();
     posts = posts.map((post) => {
       const { _id, ...rest } = post;
-      return { id: _id, ...rest, author: rest.author.username };
+      return {
+        id: _id,
+        ...rest,
+        author: { username: rest.author.username, id: rest.author._id },
+      };
     });
     res.json(posts);
   } catch (e) {
@@ -32,9 +36,14 @@ export const createPost = async (req, res) => {
 
 export const deletePost = async (req, res) => {
   try {
-    const deleted = await postModel.findByIdAndDelete(req.params.id);
-    if (deleted) {
-      res.json({ message: "Post deleted successfully" });
+    const post = await postModel.findById(req.params.id);
+    if (post) {
+      if (post.author == req.userId) {
+        await post.deleteOne();
+        res.json({ message: "Post deleted successfully" });
+      } else {
+        res.status(403).json({ error: "Unauthorized user" });
+      }
     } else {
       res.status(404).json({ error: "Post does not exist" });
     }
@@ -46,14 +55,19 @@ export const deletePost = async (req, res) => {
 
 export const updatePost = async (req, res) => {
   try {
-    const { title, content, image } = req.body;
-    const updated = await postModel.findByIdAndUpdate(req.params.id, {
-      title,
-      content,
-      image,
-    });
-    if (updated) {
-      res.json({ message: "Post updated successfully" });
+    const post = await postModel.findById(req.params.id);
+    if (post) {
+      if (post.author == req.userId) {
+        const { title, content, image } = req.body;
+        await postModel.findByIdAndUpdate(req.params.id, {
+          title,
+          content,
+          image,
+        });
+        res.json({ message: "Post updated successfully" });
+      } else {
+        res.status(403).json({ error: "Unauthorized user" });
+      }
     } else {
       res.status(404).json({ error: "Post does not exist" });
     }

@@ -17,7 +17,7 @@ export default function App() {
     async function authenticate() {
       try {
         const { data } = await api.get("/auth");
-        setUser(data);
+        setUser(data.user);
       } catch (error) {
         console.error(error.message);
       }

@@ -10,7 +10,8 @@ import { useNavigate } from "react-router";
 export default function Home({ user }) {
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
-  const [popUp, setPopup] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [form, setForm] = useState({ post: null, method: "post" });
 
   useEffect(() => {
     async function getData() {
@@ -24,25 +25,33 @@ export default function Home({ user }) {
     getData();
   }, []);
 
-  const createPost = async (data) => {
-    try {
-      const { data } = await api.post("/posts", data);
-    } catch (error) {
-      console.error(error.message);
-    }
-  };
-  const handleAdd = async () => {
+  const handleAdd = () => {
     if (user) {
-      setPopup(true);
+      setForm({ method: "post", post: null });
+      setOpen(true);
     } else {
       navigate("/auth");
     }
+  };
+
+  const handleUpdate = (post) => {
+    setForm({ method: "put", post });
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
   return (
     <>
       <div className="max-w-3xl m-auto w-full flex flex-col gap-8 mt-[50px]">
         {posts.map((post) => (
-          <BlogCard post={post} key={post.id} />
+          <BlogCard
+            post={{ ...post }}
+            key={post.id}
+            handleUpdate={handleUpdate}
+            user={user}
+          />
         ))}
       </div>
       <button
@@ -53,22 +62,22 @@ export default function Home({ user }) {
       </button>
       <div
         className={`fixed w-screen h-screen bg-black opacity-20 z-10 ${
-          popUp ? "" : "hidden"
+          open ? "" : "hidden"
         }`}
       ></div>
-      <div
-        className={`fixed w-[600px] h-[90svh] bg-white z-20 rounded-xl shadow-lg top-1/2 left-1/2 transform -translate-1/2 p-[20px] flex flex-col gap-[20px] overflow-y-auto ${
-          popUp ? "" : "hidden"
-        }`}
-      >
-        <div className="flex justify-between">
-          <p className="font-bold">Reem Tarek</p>
-          <button className="cursor-pointer" onClick={() => setPopup(false)}>
-            <IoCloseSharp className="size-6" />
-          </button>
+      {open && (
+        <div
+          className={`fixed w-[600px] h-[90svh] bg-white z-20 rounded-xl shadow-lg top-1/2 left-1/2 transform -translate-1/2 p-[20px] flex flex-col gap-[20px] overflow-y-auto`}
+        >
+          <div className="flex justify-between">
+            <p className="font-bold">Reem Tarek</p>
+            <button className="cursor-pointer" onClick={handleClose}>
+              <IoCloseSharp className="size-6" />
+            </button>
+          </div>
+          <PostForm {...form} handleClose={handleClose} />
         </div>
-        <PostForm />
-      </div>
+      )}
     </>
   );
 }
