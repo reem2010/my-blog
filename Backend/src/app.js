@@ -10,6 +10,8 @@ const databaseUrl = process.env.DATABASE_URL;
 const port = process.env.PORT || 3000;
 const host = process.env.FrontHost;
 
+console.log(port, host);
+
 const app = express();
 app.use(
   cors({
@@ -30,7 +32,7 @@ app.use("/posts", postRouter);
 mongoose
   .connect(databaseUrl)
   .then(() => {
-    app.listen(port, "0.0.0.0", () => {
+    app.listen(port, () => {
       console.log(`Listening on port ${port}`);
     });
   })
