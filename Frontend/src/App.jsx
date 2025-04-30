@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Auth from "./pages/Auth";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import { Toaster } from "react-hot-toast";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -36,6 +37,7 @@ export default function App() {
         </Route>
         <Route path="*" element={<Error />} />
       </Routes>
+      <Toaster position="bottom-right" reverseOrder={false} />
     </div>
   );
 }

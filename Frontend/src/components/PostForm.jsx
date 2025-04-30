@@ -9,7 +9,13 @@ import { IoCloseSharp } from "react-icons/io5";
 import { MdModeEdit } from "react-icons/md";
 import { useNavigate } from "react-router";
 import Button from "./Button";
-export default function PostForm({ post, handleClose, method }) {
+export default function PostForm({
+  post,
+  handleClose,
+  method,
+  updatePost,
+  createPost,
+}) {
   const navigate = useNavigate();
   const imgbbKey = import.meta.env.VITE_IMG_KEY;
   const [loading, setLoading] = React.useState(false);
@@ -65,12 +71,13 @@ export default function PostForm({ post, handleClose, method }) {
         input.image = "";
       }
       await api[method](`/posts/${post?.id ?? ""}`, input);
+      method == "put" ? updatePost(post.id, input) : createPost();
       handleClose();
     } catch (e) {
       if (e.response?.["status"] == 400) {
-        const serverErrorrs = e.response.data.errors;
-        for (const key in serverErrorrs) {
-          setError(key, { type: "manual", message: serverErrorrs[key] });
+        const serverErrors = e.response.data.errors;
+        for (const key in serverErrors) {
+          setError(key, { type: "manual", message: serverErrors[key] });
         }
       } else if (e.response?.["status"] == 401) {
         navigate("/auth");

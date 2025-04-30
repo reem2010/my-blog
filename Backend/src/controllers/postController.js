@@ -2,7 +2,9 @@ import postModel from "../models/postModel.js";
 
 export const getPosts = async (req, res) => {
   try {
-    let posts = await postModel.getPosts();
+    const { after, limit } = req.query;
+    let posts = await postModel.getPosts(after, +limit);
+    const totalDocument = await postModel.countDocuments({});
     posts = posts.map((post) => {
       const { _id, ...rest } = post;
       return {
@@ -11,7 +13,7 @@ export const getPosts = async (req, res) => {
         author: { username: rest.author.username, id: rest.author._id },
       };
     });
-    res.json(posts);
+    res.json({ posts, length: totalDocument });
   } catch (e) {
     console.log(e.message);
     res.status(500).json("error: Internal server error");
@@ -48,7 +50,7 @@ export const deletePost = async (req, res) => {
       res.status(404).json({ error: "Post does not exist" });
     }
   } catch (e) {
-    console.log(e.message);
+    console.log(e);
     res.status(500).json("error: Internal server error");
   }
 };

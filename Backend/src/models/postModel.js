@@ -23,8 +23,11 @@ const postSchema = new Schema(
   { timestamps: true }
 );
 
-postSchema.statics.getPosts = function () {
-  return this.find({}, { __v: 0 })
+postSchema.statics.getPosts = function (date, limit) {
+  const condition = date ? { createdAt: { $lt: new Date(date) } } : {};
+  limit = limit ?? 0;
+  return this.find(condition, { __v: 0 })
+    .limit(limit)
     .populate({
       path: "author",
       select: "username",
