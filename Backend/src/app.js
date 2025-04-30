@@ -13,7 +13,10 @@ const host = process.env.FrontHost;
 const app = express();
 app.use(
   cors({
-    origin: host,
+    // origin: host,
+    // credentials: true,
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
