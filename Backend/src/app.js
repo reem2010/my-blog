@@ -8,7 +8,7 @@ import postRouter from "./routes/postRoute.js";
 
 const databaseUrl = process.env.DATABASE_URL;
 const port = process.env.Port || 3000;
-const host = process.env.HOST;
+const host = process.env.FrontHost;
 
 const app = express();
 app.use(
@@ -26,7 +26,7 @@ app.use("/posts", postRouter);
 mongoose
   .connect(databaseUrl)
   .then(() => {
-    app.listen(port, () => {
+    app.listen(port, "0.0.0.0", () => {
       console.log(`Listening on port ${port}`);
     });
   })
