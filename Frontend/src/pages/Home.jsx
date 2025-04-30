@@ -132,7 +132,7 @@ export default function Home({ user }) {
           className={`fixed w-[600px] h-[90svh] bg-white z-20 rounded-xl shadow-lg top-1/2 left-1/2 transform -translate-1/2 p-[20px] flex flex-col gap-[20px] overflow-y-auto`}
         >
           <div className="flex justify-between">
-            <p className="font-bold">Reem Tarek</p>
+            <p className="font-bold">{user.username}</p>
             <button className="cursor-pointer" onClick={handleClose}>
               <IoCloseSharp className="size-6" />
             </button>
