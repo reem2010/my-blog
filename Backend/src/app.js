@@ -9,6 +9,7 @@ import postRouter from "./routes/postRoute.js";
 const databaseUrl = process.env.DATABASE_URL;
 const port = process.env.Port || 3000;
 const host = process.env.HOST;
+console.log(host);
 
 const app = express();
 app.use(
