@@ -7,7 +7,7 @@ import userRouter from "./routes/userRoutes.js";
 import postRouter from "./routes/postRoute.js";
 
 const databaseUrl = process.env.DATABASE_URL;
-const port = process.env.Port || 3000;
+const port = process.env.PORT || 3000;
 const host = process.env.FrontHost;
 
 const app = express();
@@ -19,6 +19,10 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser());
+
+app.get("/", (_req, res) => {
+  res.send("API is live!");
+});
 
 app.use("/auth", userRouter);
 app.use("/posts", postRouter);
