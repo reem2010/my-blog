@@ -28,7 +28,13 @@ app.use("/auth", userRouter);
 app.use("/posts", postRouter);
 
 mongoose
-  .connect(databaseUrl)
+  .connect(databaseUrl, {
+    maxPoolSize: 5,
+    minPoolSize: 1,
+    maxIdleTimeMS: 10000,
+    socketTimeoutMS: 30000,
+    serverSelectionTimeoutMS: 30000,
+  })
   .then(() => {
     app.listen(port, () => {
       console.log(`Listening on port ${port}`);
