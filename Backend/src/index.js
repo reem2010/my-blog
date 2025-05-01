@@ -10,6 +10,7 @@ const databaseUrl = process.env.DATABASE_URL;
 const port = process.env.PORT || 3000;
 const host = process.env.FrontHost;
 
+console.log(databaseUrl);
 const app = express();
 app.use(
   cors({
