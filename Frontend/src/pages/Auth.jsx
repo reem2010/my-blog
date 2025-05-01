@@ -1,9 +1,23 @@
 import React from "react";
-import { Outlet, NavLink, matchPath, useLocation } from "react-router";
+import {
+  Outlet,
+  NavLink,
+  matchPath,
+  useLocation,
+  useNavigate,
+} from "react-router";
+import { useEffect } from "react";
 
-export default function Auth() {
+export default function Auth({ user }) {
   const location = useLocation();
   const match = matchPath("/auth/new", location.pathname);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user]);
 
   return (
     <div className="flex-grow flex items-center justify-center">

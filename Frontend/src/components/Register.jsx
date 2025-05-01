@@ -3,11 +3,9 @@ import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import Joi from "joi";
 import api from "../api/axiosConfig";
-import { useNavigate } from "react-router";
 import Button from "./Button";
 
 export default function Register({ handleUser }) {
-  const navigate = useNavigate();
   const [loading, setLoading] = React.useState(false);
 
   const registerSchema = Joi.object({
@@ -42,11 +40,10 @@ export default function Register({ handleUser }) {
   });
 
   const submitHandler = async (formData) => {
-    setLoading(true);
     try {
+      setLoading(true);
       const { data } = await api.post("/auth/register", formData);
       handleUser(data.user);
-      navigate("/");
     } catch (e) {
       if (e.response?.["status"] == 400) {
         const serverErrorrs = e.response.data.errors;
@@ -130,14 +127,9 @@ export default function Register({ handleUser }) {
           {errors.server.message}
         </p>
       )}
-      <Button className="w-full" loading={loading}>
+      <Button className="w-full" loading={loading} customStyle={"py-3"}>
         Sign up
       </Button>
-      {/* <input
-        className="w-full text-white bg-blue-950 p-3 rounded cursor-pointer"
-        type="submit"
-        value="Sign up"
-      /> */}
     </form>
   );
 }

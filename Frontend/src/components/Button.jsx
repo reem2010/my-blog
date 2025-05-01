@@ -1,13 +1,13 @@
 import React from "react";
 
-export default function Button({ loading, children }) {
+export default function Button({ loading, children, customStyle }) {
   return (
     <button
       type="submit"
       disabled={loading}
       className={`${
         loading ? "cursor-not-allowed" : "cursor-pointer"
-      } self-end mr-5 py-1 px-4 bg-blue-950 rounded text-white`}
+      } w-full  px-4  bg-blue-950 rounded text-white ${customStyle}`}
     >
       <span>{children}</span>
       {loading && (

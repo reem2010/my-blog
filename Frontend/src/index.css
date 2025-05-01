@@ -2,3 +2,7 @@
 @plugin "daisyui" {
   themes: light --default;
 }
+
+/* body {
+  background-color: #e9e7e7;
+} */

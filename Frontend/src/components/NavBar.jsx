@@ -12,11 +12,11 @@ export default function NavBar({ user, handleUser }) {
     }
   };
   return (
-    <header className="shadow-sm">
-      <div className="navbar bg-base-100 container m-auto">
+    <header className="shadow-sm bg-white">
+      <div className="navbar bg-base-100 container m-auto px-5">
         <div className="flex-1">
           <NavLink to="/" className=" text-xl cursor-pointer">
-            daisyUI
+            Echo
           </NavLink>
         </div>
         <div className="flex-none">

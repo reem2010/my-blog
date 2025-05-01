@@ -9,13 +9,18 @@ import { IoCloseSharp } from "react-icons/io5";
 import { MdModeEdit } from "react-icons/md";
 import { useNavigate } from "react-router";
 import Button from "./Button";
+import { postContext } from "../contexts/PostContext";
+import { useContext } from "react";
+
 export default function PostForm({
   post,
   handleClose,
   method,
-  updatePost,
+
   createPost,
 }) {
+  const { updatePost } = useContext(postContext);
+
   const navigate = useNavigate();
   const imgbbKey = import.meta.env.VITE_IMG_KEY;
   const [loading, setLoading] = React.useState(false);
@@ -181,7 +186,12 @@ export default function PostForm({
         </p>
       )}
       <hr className="mb-[10px] text-[#e8e8e8]" />
-      <Button loading={loading}>{post ? "Edit" : "Post"}</Button>
+      <div className="self-end mr-3 ">
+        {" "}
+        <Button loading={loading} customStyle={"py-1"}>
+          {post ? "Edit" : "Post"}
+        </Button>
+      </div>
     </form>
   );
 }

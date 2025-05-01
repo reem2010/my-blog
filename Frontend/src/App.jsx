@@ -7,6 +7,7 @@ import Auth from "./pages/Auth";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import { Toaster } from "react-hot-toast";
+import PostContext from "./contexts/PostContext.jsx";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -30,8 +31,16 @@ export default function App() {
     <div className="flex flex-col min-h-svh">
       <NavBar user={user} handleUser={handleUser} />
       <Routes>
-        <Route path="/" element={<Home user={user} />} />
-        <Route path="/auth" element={<Auth />}>
+        <Route
+          path="/"
+          element={
+            <PostContext>
+              <Home user={user} />
+            </PostContext>
+          }
+        />
+
+        <Route path="/auth" element={<Auth user={user} />}>
           <Route index element={<Login handleUser={handleUser} />} />
           <Route path="new" element={<Register handleUser={handleUser} />} />
         </Route>

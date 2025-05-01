@@ -1,53 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import BlogCard from "../components/BlogCard";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
-import api from "../api/axiosConfig";
 import { IoCloseSharp } from "react-icons/io5";
 import PostForm from "../components/PostForm";
 import { useNavigate } from "react-router";
 import InfiniteScroll from "react-infinite-scroll-component";
-import toast from "react-hot-toast";
+import { postContext } from "../contexts/PostContext";
 
 export default function Home({ user }) {
   const navigate = useNavigate();
-  const [posts, setPosts] = useState({ data: [], length: 0 });
+  const { loading, error, getData, posts } = useContext(postContext);
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ post: null, method: "post" });
   const [added, setAded] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
   const triggerAdded = () => {
     setAded(!added);
     window.scrollTo(0, 0);
   };
-  async function getData(newData = 0) {
-    try {
-      newData && setLoading(true);
-      const { data } = await api.get(
-        `/posts?limit=6${
-          posts.data[0] && !newData
-            ? "&after=" + posts.data[posts.data.length - 1].createdAt
-            : ""
-        }`
-      );
-      if (newData) {
-        setPosts({
-          length: data.length,
-          data: data.posts,
-        });
-        setLoading(false);
-      } else {
-        setPosts((old) => ({
-          length: data.length,
-          data: [...old.data, ...data.posts],
-        }));
-      }
-    } catch (error) {
-      newData && setError(true);
-      console.error(error.message);
-    }
-  }
+
   useEffect(() => {
     getData(1);
   }, [added]);
@@ -70,18 +41,6 @@ export default function Home({ user }) {
     setOpen(false);
   };
 
-  const deletePost = (id) => {
-    let newPosts = posts.data.filter((post) => post.id != id);
-    setPosts({ length: posts.length, data: newPosts });
-  };
-
-  const updatePost = (id, data) => {
-    let newPosts = posts.data.map((post) =>
-      post.id == id ? { ...post, ...data } : post
-    );
-    setPosts({ length: posts.length, data: newPosts });
-    toast.success("Post updated successfully");
-  };
   if (error)
     return (
       <div className="flex-grow p-1 flex items-center justify-center">
@@ -96,7 +55,6 @@ export default function Home({ user }) {
           next={getData}
           hasMore={posts.length > posts.data.length}
           loader={<p>Loading...</p>}
-          endMessage={<p>No more data to load.</p>}
         >
           <div className="max-w-3xl m-auto w-full flex flex-col gap-8 mt-[50px] px-3">
             {posts.data.map((post) => (
@@ -105,7 +63,6 @@ export default function Home({ user }) {
                 key={post.id}
                 handleUpdate={handleUpdate}
                 user={user}
-                deletePost={deletePost}
               />
             ))}
           </div>
@@ -129,7 +86,7 @@ export default function Home({ user }) {
       ></div>
       {open && (
         <div
-          className={`fixed w-[600px] h-[90svh] bg-white z-20 rounded-xl shadow-lg top-1/2 left-1/2 transform -translate-1/2 p-[20px] flex flex-col gap-[20px] overflow-y-auto`}
+          className={`fixed w-[95%] sm:w-[600px] h-[90svh] bg-white z-20 rounded-xl shadow-lg top-1/2 left-1/2 transform -translate-1/2 p-[20px] flex flex-col gap-[20px] overflow-y-auto`}
         >
           <div className="flex justify-between">
             <p className="font-bold">{user.username}</p>
@@ -140,7 +97,6 @@ export default function Home({ user }) {
           <PostForm
             {...form}
             handleClose={handleClose}
-            updatePost={updatePost}
             createPost={triggerAdded}
           />
         </div>

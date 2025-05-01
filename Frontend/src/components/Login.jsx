@@ -2,11 +2,11 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import Joi from "joi";
-import { useNavigate } from "react-router";
 import api from "../api/axiosConfig";
+import Button from "./Button";
 
 export default function Login({ handleUser }) {
-  const navigate = useNavigate();
+  const [loading, setLoading] = React.useState(false);
 
   const loginSchema = Joi.object({
     email: Joi.string()
@@ -37,9 +37,9 @@ export default function Login({ handleUser }) {
 
   const submitHandler = async (formData) => {
     try {
+      setLoading(true);
       const { data } = await api.post("/auth/login", formData);
       handleUser(data.user);
-      navigate("/");
     } catch (e) {
       if (e.response?.["status"] == 400) {
         const serverErrorrs = e.response.data.errors;
@@ -58,6 +58,8 @@ export default function Login({ handleUser }) {
           message: "An error occured please try again later",
         });
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -105,11 +107,9 @@ export default function Login({ handleUser }) {
           {errors.server.message}
         </p>
       )}
-      <input
-        className="w-full text-white bg-blue-950 p-3 rounded cursor-pointer"
-        type="submit"
-        value="Login"
-      />
+      <Button className="w-full" loading={loading} customStyle={"py-3"}>
+        Log In
+      </Button>
     </form>
   );
 }
