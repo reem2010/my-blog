@@ -70,10 +70,10 @@ export default function Register({ handleUser }) {
   return (
     <form
       action=""
-      className="flex flex-col justify-between gap-[10px] flex-grow"
+      className="flex flex-col justify-between gap-[8px] flex-grow"
       onSubmit={handleSubmit(submitHandler)}
     >
-      <h1 className="text-2xl font-bold text-center text-gray-700">
+      <h1 className="text-2xl font-semibold text-blue-950 text-center ">
         Let&apos;s register!
       </h1>
       <div>
@@ -82,7 +82,7 @@ export default function Register({ handleUser }) {
           id="username"
           type="text"
           name="username"
-          className="w-full outline-none px-2 py-2 border-1 border-blue-800 rounded"
+          className="w-full px-4 py-[9px] rounded-xl border border-base-300 outline-none focus:border-blue-800 transition-all duration-200"
           placeholder="Entre your username"
           {...register("username")}
         />
@@ -98,7 +98,7 @@ export default function Register({ handleUser }) {
           id="email"
           type="email"
           name="email"
-          className="w-full outline-none px-2 py-2 border-1 border-blue-800 rounded"
+          className="w-full px-4 py-[9px] rounded-xl border border-base-300 outline-none focus:border-blue-800 transition-all duration-200"
           placeholder="Entre your email"
           {...register("email")}
         />
@@ -112,7 +112,7 @@ export default function Register({ handleUser }) {
           id="password"
           type="password"
           name="password"
-          className="w-full outline-none px-2 py-2 border-1 border-blue-800 rounded "
+          className="w-full px-4 py-[9px] outline-none focus:border-blue-800 rounded-xl border border-base-300   transition-all duration-200"
           placeholder="Entre your password"
           {...register("password")}
         />

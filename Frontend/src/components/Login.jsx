@@ -69,7 +69,7 @@ export default function Login({ handleUser }) {
       className="flex flex-col gap-5 flex-grow"
       onSubmit={handleSubmit(submitHandler)}
     >
-      <h1 className="text-2xl font-bold text-center text-gray-700">
+      <h1 className="text-2xl text-blue-950 font-semibold text-center ">
         Welcome back!
       </h1>
       <div>
@@ -78,7 +78,7 @@ export default function Login({ handleUser }) {
           id="email"
           type="email"
           name="email"
-          className="w-full outline-none px-2 py-2 border-1 border-blue-800 rounded"
+          className="w-full px-4 py-3 rounded-xl border border-base-300 outline-none focus:border-blue-800 transition-all duration-200"
           placeholder="Entre your email"
           {...register("email")}
         />
@@ -92,7 +92,7 @@ export default function Login({ handleUser }) {
           id="password"
           type="password"
           name="password"
-          className="w-full outline-none px-2 py-2 border-1 border-blue-800 rounded "
+          className="w-full px-4 py-3 rounded-xl border border-base-300 outline-none focus:border-blue-800 transition-all duration-200"
           placeholder="Entre your password"
           {...register("password")}
         />

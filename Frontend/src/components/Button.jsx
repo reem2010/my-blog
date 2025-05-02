@@ -7,7 +7,7 @@ export default function Button({ loading, children, customStyle }) {
       disabled={loading}
       className={`${
         loading ? "cursor-not-allowed" : "cursor-pointer"
-      } w-full  px-4  bg-blue-950 rounded text-white ${customStyle}`}
+      } w-full  px-4  bg-blue-950 rounded-xl text-white ${customStyle}`}
     >
       <span>{children}</span>
       {loading && (

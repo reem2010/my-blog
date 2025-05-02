@@ -2,7 +2,13 @@
 @plugin "daisyui" {
   themes: light --default;
 }
-
-/* body {
-  background-color: #e9e7e7;
-} */
+@layer base {
+  html {
+    font-family: "Inter var", system-ui, sans-serif;
+  }
+  @supports (font-variation-settings: normal) {
+    html {
+      font-family: "Inter var", sans-serif;
+    }
+  }
+}

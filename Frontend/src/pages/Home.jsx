@@ -56,7 +56,7 @@ export default function Home({ user }) {
           hasMore={posts.length > posts.data.length}
           loader={<p>Loading...</p>}
         >
-          <div className="max-w-3xl m-auto w-full flex flex-col gap-8 mt-[50px] px-3">
+          <div className="max-w-3xl m-auto w-full flex flex-col gap-8 mt-[50px] px-3 pb-5">
             {posts.data.map((post) => (
               <BlogCard
                 post={{ ...post }}
@@ -75,18 +75,18 @@ export default function Home({ user }) {
       )}
       <button
         onClick={handleAdd}
-        className="rounded-full bg-blue-950 text-amber-50 fixed bottom-5 right-5 w-[50px] h-[50px] cursor-pointer shadow-lg hover:shadow-xl hover:bg-blue-800 transition-all duration-300"
+        className="rounded-full bg-blue-950 text-amber-50 fixed sm:bottom-10 sm:right-10 bottom-5 right-5 w-[50px] h-[50px] cursor-pointer shadow-lg hover:shadow-xl hover:bg-blue-800 transition-all duration-300"
       >
         <AddIcon />
       </button>
       <div
-        className={`fixed w-screen h-screen bg-black opacity-20 z-10 ${
+        className={`fixed w-screen h-screen bg-black opacity-20 z-60 ${
           open ? "" : "hidden"
         }`}
       ></div>
       {open && (
         <div
-          className={`fixed w-[95%] sm:w-[600px] h-[90svh] bg-white z-20 rounded-xl shadow-lg top-1/2 left-1/2 transform -translate-1/2 p-[20px] flex flex-col gap-[20px] overflow-y-auto`}
+          className={`fixed w-[95%] sm:w-[600px] h-[90svh] bg-white z-80 rounded-xl shadow-lg top-1/2 left-1/2 transform -translate-1/2 p-[20px] flex flex-col gap-[20px] overflow-y-auto`}
         >
           <div className="flex justify-between">
             <p className="font-bold">{user.username}</p>

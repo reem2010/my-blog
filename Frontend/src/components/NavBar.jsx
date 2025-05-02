@@ -12,15 +12,14 @@ export default function NavBar({ user, handleUser }) {
     }
   };
   return (
-    <header className="shadow-sm bg-white">
-      <div className="navbar bg-base-100 container m-auto px-5">
-        <div className="flex-1">
-          <NavLink to="/" className=" text-xl cursor-pointer">
-            Echo
-          </NavLink>
-        </div>
-        <div className="flex-none">
-          {user && (
+    <header className=" shadow-md sticky top-0 w-full z-50 bg-base-100">
+      <div className="container m-auto pr-5 py-3 flex items-center justify-between h-[75px]">
+        <NavLink to="/" className="text-2xl font-bold  transition">
+          <img src="/logo3.svg" alt="logo" className="size-[150px]" />
+        </NavLink>
+
+        <div className="flex items-center space-x-4">
+          {user ? (
             <div className="dropdown dropdown-end">
               <div
                 tabIndex={0}
@@ -37,16 +36,23 @@ export default function NavBar({ user, handleUser }) {
               </div>
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+                className="menu menu-sm dropdown-content bg-white text-gray-800 rounded-lg shadow-lg mt-3 w-48 p-2 z-50"
               >
                 <li>
-                  <a onClick={logout}>Logout</a>
+                  <a
+                    onClick={logout}
+                    className="hover:bg-gray-100 rounded px-2 py-1"
+                  >
+                    Logout
+                  </a>
                 </li>
               </ul>
             </div>
-          )}
-          {!user && (
-            <NavLink className=" text-xl cursor-pointer" to="/auth">
+          ) : (
+            <NavLink
+              className=" text-2xl cursor-pointer text-blue-950 font-medium"
+              to="/auth"
+            >
               Login
             </NavLink>
           )}

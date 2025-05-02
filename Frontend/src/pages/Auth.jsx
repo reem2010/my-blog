@@ -21,7 +21,7 @@ export default function Auth({ user }) {
 
   return (
     <div className="flex-grow flex items-center justify-center">
-      <div className="p-9 rounded-lg shadow-md w-[400px]">
+      <div className="p-9 rounded-3xl shadow-md w-[400px] bg-base-100 m-1.5 ">
         <Outlet />
         <div className="flex w-full gap-2.5 justify-between mt-[25px]">
           <NavLink
