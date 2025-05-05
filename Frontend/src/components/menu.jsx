@@ -16,13 +16,7 @@ export default function LongMenu({ triggerUpdate, post }) {
   const handleDelete = () => {
     setAnchorEl(null);
     toast.promise(
-      api
-        .delete(`/posts/${post.id}`)
-        .then(() => deletePost(post.id))
-        .catch((e) => {
-          console.log(e.message);
-          throw e;
-        }),
+      api.delete(`/posts/${post.id}`).then(() => deletePost(post.id)),
       {
         loading: "Deleting...",
         success: <b>Post deleted!</b>,

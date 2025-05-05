@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { postContext } from "../contexts/PostContext";
 
-export default function Home({ user }) {
+export default function Home({ user, handleUser }) {
   const navigate = useNavigate();
   const { loading, error, getData, posts } = useContext(postContext);
   const [open, setOpen] = useState(false);
@@ -98,6 +98,7 @@ export default function Home({ user }) {
             {...form}
             handleClose={handleClose}
             createPost={triggerAdded}
+            handleUser={handleUser}
           />
         </div>
       )}

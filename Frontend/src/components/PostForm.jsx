@@ -16,7 +16,7 @@ export default function PostForm({
   post,
   handleClose,
   method,
-
+  handleUser,
   createPost,
 }) {
   const { updatePost } = useContext(postContext);
@@ -85,9 +85,9 @@ export default function PostForm({
           setError(key, { type: "manual", message: serverErrors[key] });
         }
       } else if (e.response?.["status"] == 401) {
+        handleUser(null);
         navigate("/auth");
       } else {
-        console.log(e.message);
         setError("server", {
           type: "manual",
           message: "An error occured please try again later",

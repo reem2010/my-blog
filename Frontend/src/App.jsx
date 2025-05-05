@@ -35,7 +35,7 @@ export default function App() {
           path="/"
           element={
             <PostContext>
-              <Home user={user} />
+              <Home user={user} handleUser={handleUser} />
             </PostContext>
           }
         />

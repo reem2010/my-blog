@@ -52,7 +52,6 @@ export default function Login({ handleUser }) {
           message: e.response.data.error,
         });
       } else {
-        console.log(e.message);
         setError("server", {
           type: "manual",
           message: "An error occured please try again later",
