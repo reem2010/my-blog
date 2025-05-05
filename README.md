@@ -5,6 +5,7 @@ Blog application built using the **MERN stack** with **Tailwind CSS** for stylin
 ## 🌐 Demo
 
 🔗 [Live Website](https://my-blog-psi-livid.vercel.app/)
+🔗 [Demo Video](https://drive.google.com/file/d/1fezAJKHBbIAmG6Z1eDM1TxeizIFfOogS/view?usp=sharing)
 
 ## 🚀 Tech Stack
 
